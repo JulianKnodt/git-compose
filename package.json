@@ -1,0 +1,18 @@
+{
+  "name": "overcommit",
+  "version": "0.0.1",
+  "description": "Overcommit JS port",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "git",
+    "hooks"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "yamljs": "^0.2.8"
+  }
+}
