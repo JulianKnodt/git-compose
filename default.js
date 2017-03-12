@@ -28,6 +28,12 @@ module.exports = {
 
 		}
 	},
+	"-h": {
+		expecting: 0,
+		execute: () => {
+			console.log('Stub helper');
+		}
+	},
 	"-f": {
 		expecting: 1,
     expectingMessage: "1 file path",
