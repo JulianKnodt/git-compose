@@ -13,6 +13,10 @@ if (args[0] === 'install') {
 } else if (args[0] === 'uninstall') {
   path = './uninstall';
   args = args.slice(1);
+} else if (args[0] === 'init') {
+  path = './init';
+  args = args.slice(1);
+  return require('./init')(__dirname);
 }
 
 const paramsMap = require(path);
