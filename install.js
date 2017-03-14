@@ -1,23 +1,75 @@
 const read = require('fs-readdir-recursive');
+const fs = require('fs');
 let ignored = ['.git', 'node_modules'];
 var detect = require('language-detect');
+const path = require('path');
+const HookCreator = require('./hookCreator');
 module.exports = {
-  "--default": {
-    expecting: 0,
-    execute: () => {
-      let files = read(__dirname, fileName => {
-        return fileName[0] !== '.' && !ignored.includes(fileName);
-      });
-      console.log(files);
-      const languages = files.reduce((all, next) => {
-        const filetype = detect.filename(next);
-        if (!all.includes(filetype.toLowerCase())) {
-          all.push(filetype.toLowerCase());
+  // "--default": {
+  //   expecting: 0,
+  //   execute: () => {
+      // let files = read(__dirname, fileName => {
+      //   return fileName[0] !== '.' && !ignored.includes(fileName);
+      // });
+      // const languages = files.reduce((all, next) => {
+      //   const filetype = detect.filename(next);
+      //   if (!all.includes(filetype.toLowerCase())) {
+      //     all.push(filetype.toLowerCase());
+      //   }
+      //   return all;
+      // }, []);
+  //   }
+  // },
+  command: {
+    expecting: 1,
+    execute: ({filePath=path.resolve(__dirname,'overcommit.json'), hookPath=path.resolve(__dirname, './.git/hooks')}) => {
+      fs.readFile(path.resolve(__dirname, 'overcommit.json'), (err, data) => {
+        if (err) {
+          throw err;
         }
-        return all;
-      }, []);
+        let options = JSON.parse(data);
+        for (let hook in options.hooks) {
+          let outputFile = new HookCreator(hook);
+          const hookOptions = options.hooks[hook];
+          hookOptions.hookFiles.forEach(file => {
+            const languageType = detect.filename(file).toLowerCase();
+            let wrapper = options.wrappers.languages[languageType];
+            if (wrapper) {
+              outputFile.write(wrapper, file, '"$@"');
+            }
+          });
+          let writePath = path.resolve(hookPath, hook);
+          fs.writeFile(writePath, outputFile.toString(), (err, data) => {
+            if (!err) {
+              console.log(`Created ${hook} with ${hookOptions.hookFiles.length} hooks.`);
+              fs.chmod(writePath, 0755, (err, data) => {
+                console.log(`${hook} is now runnable.`)
+              });
+            }
+          });
+
+        }
+      });
     }
-    
+  },
+  defaultParams: {
+    filePath: path.resolve(__dirname, 'overcommit.json'),
+    hooksPath: path.resolve(__dirname, './.git/hooks')
   }
 }
-module.exports["--default"].execute();
+
+module.exports.command.execute(module.exports.defaultParams);
+
+
+
+
+
+
+
+
+
+
+
+
+
+

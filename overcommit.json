@@ -1,0 +1,41 @@
+{
+  "wrappers": {
+    "languages": {
+      "javascript": "/Users/julianknodt/Desktop/Programming/npm/oc/wrappers/nodeWrapper.js"
+    }
+  },
+  "hooks": {
+    "applypatch-msg": {
+      "hookFiles": []
+    },
+    "post-update": {
+      "hookFiles": []
+    },
+    "pre-commit": {
+      "hookFiles": []
+    },
+    "pre-rebase": {
+      "hookFiles": []
+    },
+    "prepare-commit-msg": {
+      "hookFiles": []
+    },
+    "commit-msg": {
+      "hookFiles": [
+        "/Users/julianknodt/Desktop/Programming/npm/oc/hooks/commit-msg/singleLine.js"
+      ]
+    },
+    "pre-applypatch": {
+      "hookFiles": []
+    },
+    "pre-push": {
+      "hookFiles": []
+    },
+    "pre-receive": {
+      "hookFiles": []
+    },
+    "update": {
+      "hookFiles": []
+    }
+  }
+}

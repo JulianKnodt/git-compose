@@ -10,6 +10,9 @@
     "git",
     "hooks"
   ],
+  "bin": {
+    "overcommit": "./index.js"
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {

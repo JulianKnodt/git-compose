@@ -1,10 +1,8 @@
 #! /usr/local/bin/node
 
-const args = process.argv.slice(2);
+let args = process.argv.slice(2);
 
 const YAML = require('yamljs');
-
-const commands = ['install', 'uninstall'];
 
 let path = './default';
 if (args[0] === 'install') {
@@ -21,7 +19,7 @@ if (args[0] === 'install') {
 
 const paramsMap = require(path);
 
-if (args.length === 0) {
+if (args.length === 0 && path === './default') {
   args.push('-h');
 }
 
