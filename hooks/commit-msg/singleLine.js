@@ -5,7 +5,7 @@ module.exports = ([args]) => {
       console.log(err);
       process.exitCode = 1;
     } else {
-      let test = data.toString().split('\n').filter(line => line.startsWith('#'));
+      let test = data.toString().split('\n').filter(line => !line.startsWith('#'));
       if (test.length > 2) {
         if (test[1] === '') {
           console.log('✓ Single Line Commit Message');
