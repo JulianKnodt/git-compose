@@ -2,8 +2,6 @@
 
 let args = process.argv.slice(2);
 
-const YAML = require('yamljs');
-
 let path = './default';
 if (args[0] === 'install') {
   path = './install';

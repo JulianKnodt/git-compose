@@ -8,7 +8,8 @@ const writeOut = (...str) => process.stdout.write(str.join(' '));
 
 const wrappers = {
   languages: {
-    javascript: path.resolve(__dirname, './wrappers/nodeWrapper.js')
+    javascript: path.resolve(__dirname, './wrappers/nodeWrapper.js'),
+    ruby: path.resolve(__dirname, './wrappers/rubyWrapper.rb')
   }
 };
 
