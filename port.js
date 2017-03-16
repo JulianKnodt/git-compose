@@ -1,8 +1,8 @@
 const yaml = require('yamljs');
+const path = require('path');
+const fs = require('fs');
 
-let data = yaml.load('./spec/testOvercommit.yml');
-console.log(data);
-const hookMap = {
+const nameMap = {
 	PreCommit: 'pre-commit',
 	PostCommit: 'post-commit',
 	PostCheckout: 'post-checkout',
@@ -22,27 +22,36 @@ const hookMap = {
 	PrePush: 'pre-push'
 }
 
+const retroHookDir = path.resolve(__dirname, 'retroHooks');
 module.exports = {
 	command: {
 		expecting: 1,
 		execute: ({yamlPath='./overcommit.yml', jsonPath='./overcommit.json'}) => {
-				let yamlOptions = yaml.load(yamlPath);
-				for (let i in yamlOptions) {
-					if (i === 'gemfile') {
-						//stub
-					} else if (i === 'concurrency') {
-						// stub
-					} else if (i === 'quiet') {
+			let options = JSON.parse(fs.readFileSync(jsonPath).toString());
+			let yamlOptions = yaml.load(yamlPath);
+			for (let i in yamlOptions) {
+				if (i === 'gemfile') {
+					//stub
+				} else if (i === 'concurrency') {
+					// stub
+				} else if (i === 'quiet') {
 
-					} else if (i === 'verify_signatures') {
+				} else if (i === 'verify_signatures') {
 
-					} else if (i === 'plugin_directory') {
+				} else if (i === 'plugin_directory') {
 
-					} else {
-						//i is type of hook
-						
-					}
+				} else {
+					//i is type of hook
+					let realHookName = nameMap[i];
+					let retroHooks = fs.readdirSync(path.resolve(retroHookDir, realHookName))
+					.filter(x => !x.startsWith('.'))
+					//convert to relative path
+					.map(fileName => './' + path.relative('', path.resolve(retroHookDir, fileName)));
+					options.hooks[realHookName].hooks = options.hooks[realHookName].hooks.concat(retroHooks);
 				}
+			}
 		}
 	}
 }
+
+module.exports.command.execute({yamlPath:'./spec/testDefault.yml'});

@@ -29,7 +29,8 @@ const prompts = [
 'update', 
 'post-update', 
 'pre-auto-gc', 
-'post-rewrite'];
+'post-rewrite',
+'pre-push'];
 const initOvercommit = (dirname = __dirname) => {
   const rl = readline.createInterface({
     input: process.stdin,

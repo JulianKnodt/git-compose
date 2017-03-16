@@ -21,20 +21,3 @@ module.exports = ([args]) => {
     }
   });
 }
-
-
-console.log(`applypatch-msg
-pre-applypatch
-post-applypatch
-pre-commit
-prepare-commit-msg
-commit-msg
-post-commit
-pre-rebase
-post-checkout
-post-merge
-pre-receive
-update
-post-update
-pre-auto-gc
-post-rewrite`.split('\n').map(x => "'" + x + "'").join(', '));
