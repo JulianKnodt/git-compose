@@ -12,7 +12,10 @@ if (args[0] === 'install') {
 } else if (args[0] === 'init') {
   path = './init';
   args = args.slice(1);
-  return require('./init')(__dirname);
+  return require(path)(__dirname);
+} else if (args[0] === 'port') {
+  path = './port';
+  args = args.slice(1);
 }
 
 const paramsMap = require(path);

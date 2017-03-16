@@ -32,6 +32,9 @@ const initOvercommit = (dirname = __dirname) => {
       writeOut('Will delete overcommit on complete.', '\n');
     }
   });
+
+  //START USER INPUT
+
   const log = () => writeOut('Include', prompts[results.length], 'hook? [y/n] ');
   const startProcessing = () => {
     log();
@@ -53,6 +56,9 @@ const initOvercommit = (dirname = __dirname) => {
       }
     });
   }
+
+  //FINISHED USER INPUT
+
   const finishProcessing = () => {
     const userChoices = prompts.map((hook, i) => ({
       hook, include: results[i]
@@ -81,6 +87,8 @@ const initOvercommit = (dirname = __dirname) => {
     startProcessing();
   }, 500);
 }
+
+
 
 // initOvercommit();
 module.exports = initOvercommit;
