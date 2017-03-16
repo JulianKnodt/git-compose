@@ -1,41 +1,57 @@
 {
   "wrappers": {
     "languages": {
-      "javascript": "/Users/julianknodt/Desktop/Programming/npm/oc/wrappers/nodeWrapper.js"
+      "javascript": "/Users/julianknodt/Desktop/Programming/npm/oc/wrappers/nodeWrapper.js",
+      "ruby": "/Users/julianknodt/Desktop/Programming/npm/oc/wrappers/rubyWrapper.rb"
     }
   },
   "hooks": {
     "applypatch-msg": {
-      "hookFiles": []
-    },
-    "post-update": {
-      "hookFiles": []
-    },
-    "pre-commit": {
-      "hookFiles": []
-    },
-    "pre-rebase": {
-      "hookFiles": []
-    },
-    "prepare-commit-msg": {
-      "hookFiles": []
-    },
-    "commit-msg": {
-      "hookFiles": [
-        "/Users/julianknodt/Desktop/Programming/npm/oc/hooks/commit-msg/singleLine.js"
-      ]
+      "hooks": []
     },
     "pre-applypatch": {
-      "hookFiles": []
+      "hooks": []
     },
-    "pre-push": {
-      "hookFiles": []
+    "post-applypatch": {
+      "hooks": []
+    },
+    "pre-commit": {
+      "hooks": []
+    },
+    "prepare-commit-msg": {
+      "hooks": []
+    },
+    "commit-msg": {
+      "hooks": [
+        "./hooks/commit-msg/singleLine.js"
+      ]
+    },
+    "post-commit": {
+      "hooks": []
+    },
+    "pre-rebase": {
+      "hooks": []
+    },
+    "post-checkout": {
+      "hooks": []
+    },
+    "post-merge": {
+      "hooks": []
     },
     "pre-receive": {
-      "hookFiles": []
+      "hooks": []
     },
     "update": {
-      "hookFiles": []
+      "hooks": []
+    },
+    "post-update": {
+      "hooks": []
+    },
+    "pre-auto-gc": {
+      "hooks": []
+    },
+    "post-rewrite": {
+      "hooks": []
     }
   }
 }

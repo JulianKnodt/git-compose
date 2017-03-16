@@ -31,23 +31,23 @@ module.exports = {
         for (let hook in options.hooks) {
           let outputFile = new HookCreator(hook);
           const hookOptions = options.hooks[hook];
-          hookOptions.hookFiles.forEach(file => {
-            const languageType = detect.filename(file).toLowerCase();
+          hookOptions.hooks.forEach(hook => {
+            const languageType = detect.filename(hook).toLowerCase();
             let wrapper = options.wrappers.languages[languageType];
             if (wrapper) {
-              outputFile.write(wrapper, file, '"$@"');
+              console.log(path.resolve(__dirname, hook));
+              outputFile.write(wrapper, path.isAbsolute(hook) ? path : path.resolve(__dirname, hook), '"$@"');
             }
           });
           let writePath = path.resolve(hookPath, hook);
           fs.writeFile(writePath, outputFile.toString(), (err, data) => {
             if (!err) {
-              console.log(`Created ${hook} with ${hookOptions.hookFiles.length} hooks.`);
+              console.log(`Created ${hook} with ${hookOptions.hooks.length} hooks.`);
               fs.chmod(writePath, 0755, (err, data) => {
                 console.log(`${hook} is now runnable.`)
               });
             }
           });
-
         }
       });
     }

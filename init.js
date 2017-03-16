@@ -14,7 +14,22 @@ const wrappers = {
 };
 
 const hookDir = path.resolve(__dirname, './hooks');
-const prompts = ['applypatch-msg', 'post-update', 'pre-commit','pre-rebase','prepare-commit-msg', 'commit-msg','pre-applypatch','pre-push','pre-receive','update'];
+const prompts = [
+'applypatch-msg', 
+'pre-applypatch', 
+'post-applypatch', 
+'pre-commit', 
+'prepare-commit-msg', 
+'commit-msg', 
+'post-commit', 
+'pre-rebase', 
+'post-checkout', 
+'post-merge', 
+'pre-receive', 
+'update', 
+'post-update', 
+'pre-auto-gc', 
+'post-rewrite'];
 const initOvercommit = (dirname = __dirname) => {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -65,11 +80,13 @@ const initOvercommit = (dirname = __dirname) => {
     }));
     userChoices.forEach(choice => {
       let hookOptions = {
-        hookFiles: []
+        hooks: []
       };
       if (choice.include) {
         const hookPath = path.resolve(hookDir, choice.hook);
-        hookOptions.hookFiles = fs.readdirSync(hookPath).map(fileName => path.resolve(hookPath, fileName));
+        hookOptions.hooks = fs.readdirSync(hookPath)
+        .filter(fileName => !fileName.startsWith('.'))
+        .map(fileName => './' + path.relative('', path.resolve(hookPath, fileName)));
       }
       resultingOptions.hooks[choice.hook] = hookOptions;
     });
