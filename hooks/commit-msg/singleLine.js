@@ -1,5 +1,6 @@
 const fs = require('fs');
 module.exports = (args) => {
+  console.log('INVOKED dfsdfgsdgdsgsdfgdfgdfgdfgdf');
   fs.readFile(args, (err, data) => {
     if (err) {
       console.log(err);
