@@ -1,5 +1,5 @@
 const fs = require('fs');
-module.exports = ([args]) => {
+module.exports = (args) => {
   fs.readFile(args, (err, data) => {
     if (err) {
       console.log(err);

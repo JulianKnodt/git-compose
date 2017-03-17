@@ -5,21 +5,6 @@ var detect = require('language-detect');
 const path = require('path');
 const HookCreator = require('./hookCreator');
 module.exports = {
-  // "--default": {
-  //   expecting: 0,
-  //   execute: () => {
-      // let files = read(__dirname, fileName => {
-      //   return fileName[0] !== '.' && !ignored.includes(fileName);
-      // });
-      // const languages = files.reduce((all, next) => {
-      //   const filetype = detect.filename(next);
-      //   if (!all.includes(filetype.toLowerCase())) {
-      //     all.push(filetype.toLowerCase());
-      //   }
-      //   return all;
-      // }, []);
-  //   }
-  // },
   command: {
     expecting: 1,
     execute: ({filePath=path.resolve(__dirname,'git-compose.json'), hookPath=path.resolve(__dirname, './.git/hooks')}) => {
@@ -29,7 +14,7 @@ module.exports = {
         }
         let options = JSON.parse(data);
         for (let language in options.wrappers.languages) {
-          let wrapperPath = options.wrappers.languages[language]
+          let wrapperPath = options.wrappers.languages[language];
           options.wrappers.languages[language] = path.isAbsolute(wrapperPath) ? wrapperPath : path.resolve(__dirname, wrapperPath);
         }
         for (let hook in options.hooks) {
@@ -44,8 +29,9 @@ module.exports = {
               }
             }
           });
+          console.log(outputFile.eval());
           let writePath = path.resolve(hookPath, hook);
-          fs.writeFile(writePath, outputFile.toString(), (err, data) => {
+          fs.writeFile(writePath, outputFile.eval(), (err, data) => {
             if (!err) {
               console.log(`Created ${hook} with ${hookOptions.hooks.length} hooks.`);
               fs.chmod(writePath, 0755, (err, data) => {
