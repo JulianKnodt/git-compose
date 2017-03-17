@@ -1,7 +1,7 @@
 {
-  "name": "overcommit",
+  "name": "git-compose",
   "version": "0.0.5",
-  "description": "Overcommit JS port",
+  "description": "Overcommit NodeJS port",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,7 @@
     "hooks"
   ],
   "bin": {
-    "overcommit": "./index.js"
+    "git-compose": "./index.js"
   },
   "author": "",
   "license": "MIT",

@@ -28,15 +28,20 @@ module.exports = {
           throw err;
         }
         let options = JSON.parse(data);
+        for (let language in options.wrappers.languages) {
+          let wrapperPath = options.wrappers.languages[language]
+          options.wrappers.languages[language] = path.isAbsolute(wrapperPath) ? wrapperPath : path.resolve(__dirname, wrapperPath);
+        }
         for (let hook in options.hooks) {
           let outputFile = new HookCreator(hook);
           const hookOptions = options.hooks[hook];
           hookOptions.hooks.forEach(hook => {
-            const languageType = detect.filename(hook).toLowerCase();
-            let wrapper = options.wrappers.languages[languageType];
-            if (wrapper) {
-              console.log(path.resolve(__dirname, hook));
-              outputFile.write(wrapper, path.isAbsolute(hook) ? path : path.resolve(__dirname, hook), '"$@"');
+            if (hook.include) {
+              const languageType = detect.filename(hook.path).toLowerCase();
+              let wrapper = options.wrappers.languages[languageType];
+              if (wrapper) {
+                outputFile.write(wrapper, path.isAbsolute(hook.path) ? hook.path : path.resolve(__dirname, hook.path), '"$@"');
+              }
             }
           });
           let writePath = path.resolve(hookPath, hook);

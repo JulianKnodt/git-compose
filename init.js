@@ -8,8 +8,8 @@ const writeOut = (...str) => process.stdout.write(str.join(' '));
 
 const wrappers = {
   languages: {
-    javascript: path.resolve(__dirname, './wrappers/nodeWrapper.js'),
-    ruby: path.resolve(__dirname, './wrappers/rubyWrapper.rb')
+    javascript: './' + path.relative(__dirname, './wrappers/nodeWrapper.js'),
+    ruby: './' + path.relative(__dirname, './wrappers/rubyWrapper.rb')
   }
 };
 
@@ -87,7 +87,8 @@ const initOvercommit = (dirname = __dirname) => {
         const hookPath = path.resolve(hookDir, choice.hook);
         hookOptions.hooks = fs.readdirSync(hookPath)
         .filter(fileName => !fileName.startsWith('.'))
-        .map(fileName => './' + path.relative('', path.resolve(hookPath, fileName)));
+        .map(fileName => './' + path.relative('', path.resolve(hookPath, fileName)))
+        .map(path => ({include: true, path, options: ''}));
       }
       resultingOptions.hooks[choice.hook] = hookOptions;
     });

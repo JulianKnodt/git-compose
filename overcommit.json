@@ -1,8 +1,8 @@
 {
   "wrappers": {
     "languages": {
-      "javascript": "/Users/julianknodt/Desktop/Programming/npm/oc/wrappers/nodeWrapper.js",
-      "ruby": "/Users/julianknodt/Desktop/Programming/npm/oc/wrappers/rubyWrapper.rb"
+      "javascript": "wrappers/nodeWrapper.js",
+      "ruby": "wrappers/rubyWrapper.rb"
     }
   },
   "hooks": {
@@ -23,7 +23,11 @@
     },
     "commit-msg": {
       "hooks": [
-        "./hooks/commit-msg/singleLine.js"
+        {
+          "include": true,
+          "path": "./hooks/commit-msg/singleLine.js",
+          "options": ""
+        }
       ]
     },
     "post-commit": {
