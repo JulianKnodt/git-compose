@@ -38,14 +38,14 @@ const initOvercommit = (dirname = __dirname) => {
   });
   let resultingOptions = {wrappers, hooks:{}};
   let results = [];
-  writeOut('Creating overcommit parameters...', '\n');
-  fs.access(path.resolve(dirname, 'overcommit.json'), (err, data) => {
+  writeOut('Creating git-compose parameters...', '\n');
+  fs.access(path.resolve(dirname, 'git-compose.json'), (err, data) => {
     writeOut('Type [exit] to quit...', '\n');
     if (err && err.errno === -2) {
-      writeOut('Writing to', __dirname + '/overcommit.json...', '\n');
+      writeOut('Writing to', __dirname + '/git-compose.json...', '\n');
       startProcessing();
     } else {
-      writeOut('Will delete overcommit on complete.', '\n');
+      writeOut('Will delete git-compose on complete.', '\n');
     }
   });
 
@@ -92,12 +92,12 @@ const initOvercommit = (dirname = __dirname) => {
       }
       resultingOptions.hooks[choice.hook] = hookOptions;
     });
-    fs.writeFile(path.resolve(__dirname, 'overcommit.json'), JSON.stringify(resultingOptions, null, 2), (err, result) => {
+    fs.writeFile(path.resolve(__dirname, 'git-compose.json'), JSON.stringify(resultingOptions, null, 2), (err, result) => {
       if (err) {
         writeOut(err.toString());
         process.exitCode = 1;
       } else {
-        writeOut('Completed initialization of overcommit.', '\n');
+        writeOut('Completed initialization of git-compose.', '\n');
         process.exit(0);
       }
     });

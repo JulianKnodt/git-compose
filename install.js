@@ -22,8 +22,8 @@ module.exports = {
   // },
   command: {
     expecting: 1,
-    execute: ({filePath=path.resolve(__dirname,'overcommit.json'), hookPath=path.resolve(__dirname, './.git/hooks')}) => {
-      fs.readFile(path.resolve(__dirname, 'overcommit.json'), (err, data) => {
+    execute: ({filePath=path.resolve(__dirname,'git-compose.json'), hookPath=path.resolve(__dirname, './.git/hooks')}) => {
+      fs.readFile(path.resolve(__dirname, 'git-compose.json'), (err, data) => {
         if (err) {
           throw err;
         }
@@ -58,7 +58,7 @@ module.exports = {
     }
   },
   defaultParams: {
-    filePath: path.resolve(__dirname, 'overcommit.json'),
+    filePath: path.resolve(__dirname, 'git-compose.json'),
     hooksPath: path.resolve(__dirname, './.git/hooks')
   }
 }

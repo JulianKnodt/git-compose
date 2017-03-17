@@ -26,7 +26,7 @@ const retroHookDir = path.resolve(__dirname, 'retroHooks');
 module.exports = {
 	command: {
 		expecting: 1,
-		execute: ({yamlPath='./overcommit.yml', jsonPath='./overcommit.json'}) => {
+		execute: ({yamlPath='./overcommit.yml', jsonPath='./git-compose.json'}) => {
 			let options = JSON.parse(fs.readFileSync(jsonPath).toString());
 			let yamlOptions = yaml.load(yamlPath);
 			for (let i in yamlOptions) {

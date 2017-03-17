@@ -1,8 +1,8 @@
 {
   "wrappers": {
     "languages": {
-      "javascript": "wrappers/nodeWrapper.js",
-      "ruby": "wrappers/rubyWrapper.rb"
+      "javascript": "./wrappers/nodeWrapper.js",
+      "ruby": "./wrappers/rubyWrapper.rb"
     }
   },
   "hooks": {
