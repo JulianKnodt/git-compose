@@ -25,6 +25,11 @@
       "hooks": [
         {
           "include": true,
+          "path": "./hooks/commit-msg/capitalizedSubject.js",
+          "options": ""
+        },
+        {
+          "include": true,
           "path": "./hooks/commit-msg/singleLine.js",
           "options": ""
         }
