@@ -8,7 +8,7 @@ const runTest = commitMsg => {
     reporter.warn('subject should be capitalized')
   }
 }
-module.exports = (args, fileData) => {
+module.exports = (options, args, fileData) => {
   if (fileData) {
     runTest(fileData);
   } else 

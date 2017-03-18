@@ -25,11 +25,10 @@ module.exports = {
               const languageType = detect.filename(hook.path).toLowerCase();
               let wrapper = options.wrappers.languages[languageType];
               if (wrapper) {
-                outputFile.write(wrapper, path.isAbsolute(hook.path) ? hook.path : path.resolve(__dirname, hook.path), '"$@"');
+                outputFile.write(wrapper, path.isAbsolute(hook.path) ? hook.path : path.resolve(__dirname, hook.path), hook.options);
               }
             }
           });
-          console.log(outputFile.eval());
           let writePath = path.resolve(hookPath, hook);
           fs.writeFile(writePath, outputFile.eval(), (err, data) => {
             if (!err) {

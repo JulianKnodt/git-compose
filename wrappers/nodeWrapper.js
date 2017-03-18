@@ -2,6 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const qs = require('querystring');
 
 let args = process.argv;
 let i = args.length;
@@ -13,6 +14,8 @@ if (i !== -1) {
 	passed = args.slice(i+1)
 	hooks = args.slice(2, i);
 }
+hooks = hooks.map(hookQS => qs.parse(hookQS));
+
 passed = passed.reduce((args, nextArg) => {
   args = args.concat(nextArg);
 	if(nextArg !== path.basename(nextArg)) {
@@ -20,4 +23,4 @@ passed = passed.reduce((args, nextArg) => {
   }
   return args;
 }, []);
-let testValues = hooks.map(hook => require(hook)(...passed));
+let testValues = hooks.map(hook => require(hook.test)(hook.options, ...passed));
