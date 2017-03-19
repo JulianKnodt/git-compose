@@ -11,5 +11,3 @@ module.exports = {
 		console.log(chalk.yellow('!'), chalk.yellow.inverse(msg.toLowerCase()));
 	}
 };
-
-console.log(chalk);

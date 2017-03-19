@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const qs = require('querystring');
-
+const optionParser = require('../utils/option.js');
 let args = process.argv;
 let i = args.length;
 while(i >= 0 && args[--i] !== '--args');
@@ -23,4 +23,7 @@ passed = passed.reduce((args, nextArg) => {
   }
   return args;
 }, []);
-let testValues = hooks.map(hook => require(hook.test)(hook.options, ...passed));
+let testValues = hooks.map(hook => {
+  let test = require(hook.test);
+  test(optionParser(hook.options, test.options), ...passed)
+});
