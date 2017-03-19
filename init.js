@@ -3,7 +3,7 @@
 const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
-
+const chalk = require('chalk');
 const writeOut = (...str) => process.stdout.write(str.join(' '));
 
 const wrappers = {
@@ -51,7 +51,7 @@ const initOvercommit = (dirname = __dirname) => {
 
   //START USER INPUT
 
-  const log = () => writeOut('Include', prompts[results.length], 'hook? [y/n] ');
+  const log = () => writeOut('Include', chalk.inverse(prompts[results.length]), 'hook? [y/n] ');
   const startProcessing = () => {
     log();
     rl.on('line', line =>{
@@ -65,7 +65,7 @@ const initOvercommit = (dirname = __dirname) => {
         writeOut('Only accepted values are y & n', '\n');
       }
       if (results.length === prompts.length) {
-        writeOut('\n', 'Cool.', '\n\n');
+        writeOut('\n', chalk.inverse.bold('Cool.'), '\n\n');
         finishProcessing();
       } else {
         log();

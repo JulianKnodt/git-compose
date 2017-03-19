@@ -30,12 +30,12 @@
         },
         {
           "include": true,
-          "path": "./hooks/commit-msg/singleLine.js",
+          "path": "./hooks/commit-msg/hardTabs.js",
           "options": ""
         },
         {
           "include": true,
-          "path": "./hooks/commit-msg/templateCommitMsg.js",
+          "path": "./hooks/commit-msg/singleLine.js",
           "options": ""
         }
       ]
