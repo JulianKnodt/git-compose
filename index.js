@@ -48,6 +48,6 @@ for (let i = 0; i < args.length; i ++) {
 
 if (!(require.main === module)) {
   module.exports = {
-    reporter: require('./report/report.js')
+    reporter: require('./utils/report.js')
   };
 }

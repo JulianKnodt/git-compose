@@ -1,4 +1,4 @@
-const reporter = require('../../report/report.js');
+const reporter = require('../../utils/report.js');
 const fs = require('fs');
 const runTest = commitMsg => {
   let test;
