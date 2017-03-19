@@ -27,7 +27,17 @@ module.exports = (bashStr, optionsMap={}) => {
           delete param.expecting;
         }
       } else {
-        reporter.warning(`no option ${parts[parts[i]]}`);
+        reporter.warning(`no option ${parts[i]}`);
+      }
+    }
+  }
+  for (let option in optionsMap) {
+    if (optionsMap[option].default && options[option] === undefined) {
+      let def = optionsMap[option].default;
+      if (Array.isArray(def)) {
+        options[option] = def;
+      } else {
+        options[option] = [def];
       }
     }
   }

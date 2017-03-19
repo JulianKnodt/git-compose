@@ -1,10 +1,11 @@
 const reporter = require('../../utils/report.js');
 const fs = require('fs');
 const runTest = (commitMsg, options) => {
-  let test;
-  if (test) {
-    reporter.success('success');
-    options.error ? reporter.error('error') : reporter.warning('warn');
+  let test = commitMsg.toString().split('\n');
+  if (test.every(line => line.length < options.length)) {
+    reporter.success(`every line is under ${options.length} characters`);
+  } else {
+    reporter.error(`one or more lines is above ${options.length} characters`);
   }
 }
 module.exports = (options, filePath, fileData) => {
@@ -21,12 +22,8 @@ module.exports = (options, filePath, fileData) => {
   }
 }
 module.exports.options = {
-  example: {
+  length: {
     expecting: 0,
-    alias: 'exampleOption',
-    default: 'default will be wrapped in array'
-  }, 
-  error: {
-    expecting: 0
+    default: 80
   }
 }

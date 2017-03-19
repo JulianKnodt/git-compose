@@ -30,12 +30,27 @@
         },
         {
           "include": true,
+          "path": "./hooks/commit-msg/emptyMessage.js",
+          "options": ""
+        },
+        {
+          "include": true,
           "path": "./hooks/commit-msg/hardTabs.js",
-          "options": "--error"
+          "options": ""
+        },
+        {
+          "include": true,
+          "path": "./hooks/commit-msg/russianNovel.js",
+          "options": ""
         },
         {
           "include": true,
           "path": "./hooks/commit-msg/singleLine.js",
+          "options": ""
+        },
+        {
+          "include": true,
+          "path": "./hooks/commit-msg/textWidth.js",
           "options": ""
         }
       ]
