@@ -5,7 +5,8 @@ const runTest = (commitMsg, options) => {
   if (commitMsg.indexOf('\t') === -1) {
     reporter.success('No hard tabs in commit message');
   } else {
-    reporter.warning('Don\'t include hard tabs in commit message')
+    const msg = 'Don\'t include hard tabs in commit message';
+    options.error ? reporter.error(msg) : reporter.warning(msg);
   }
 }
 module.exports = (options, filePath, fileData) => {
@@ -22,7 +23,7 @@ module.exports = (options, filePath, fileData) => {
   }
 };
 module.exports.options = {
-  throwError: {
+  error: {
     expecting: 0
   }
 };

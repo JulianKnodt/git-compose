@@ -31,7 +31,7 @@
         {
           "include": true,
           "path": "./hooks/commit-msg/hardTabs.js",
-          "options": ""
+          "options": "--error"
         },
         {
           "include": true,
