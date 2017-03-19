@@ -9,5 +9,8 @@ module.exports = {
 	},
 	warning: (msg) => {
 		console.log(chalk.yellow('!'), chalk.yellow.inverse(msg.toLowerCase()));
+	},
+	warn: (msg) => {
+		console.log(chalk.yellow('!'), chalk.yellow.inverse(msg.toLowerCase()));
 	}
 };

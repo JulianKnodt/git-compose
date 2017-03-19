@@ -25,5 +25,6 @@ passed = passed.reduce((args, nextArg) => {
 }, []);
 let testValues = hooks.map(hook => {
   let test = require(hook.test);
+  console.log(hook.options, test.options);
   test(optionParser(hook.options, test.options), ...passed)
 });
