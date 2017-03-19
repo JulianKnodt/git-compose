@@ -1,8 +1,7 @@
 const reporter = require('../../utils/report.js');
 const fs = require('fs');
 const runTest = commitMsg => {
-  console.log(commitMsg.toString().split('\n'));
-  if(commitMsg.toString().split('\n').length > 10) {
+  if(commitMsg.toString().split('\n').filter(line => !line.startsWith('#')).length > 10) {
     reporter.warn('Looks like you wrote a russian novel...');
   }
 }

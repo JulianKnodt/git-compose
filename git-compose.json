@@ -52,6 +52,11 @@
           "include": true,
           "path": "./hooks/commit-msg/textWidth.js",
           "options": ""
+        },
+        {
+          "include": true,
+          "path": "./hooks/commit-msg/trailingPeriod.js",
+          "options": ""
         }
       ]
     },

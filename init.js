@@ -13,6 +13,8 @@ const wrappers = {
   }
 };
 
+const yn = '[' + chalk.green('y') + '/' + chalk.red('n') + ']';
+
 const hookDir = path.resolve(__dirname, './hooks');
 const prompts = [
 'applypatch-msg', 
@@ -43,15 +45,29 @@ const initOvercommit = (dirname = __dirname) => {
     writeOut('Type [exit] to quit...', '\n');
     if (err && err.errno === -2) {
       writeOut('Writing to', __dirname + '/git-compose.json...', '\n');
-      startProcessing();
     } else {
-      writeOut('Will delete git-compose on complete.', '\n');
+      writeOut('Will overwrite git-compose on complete.', '\n');
     }
   });
 
   //START USER INPUT
-
-  const log = () => writeOut('Include', chalk.inverse(prompts[results.length]), 'hook? [y/n] ');
+  const processAll = () => {
+    writeOut(chalk.inverse('Include all hooks?'), yn);
+    rl.on('line', line => {
+      if (line === 'exit') {
+        process.exit(0);
+      } else if (line === 'y' || ' ') {
+        for (let i = 0; i < prompts.length; i++) {
+          results.push(true);
+        }
+        writeOut('\n', chalk.inverse.bold('Cool.'), '\n\n');
+        finishProcessing();
+      } else {
+        startProcessing();
+      }
+    });
+  }
+  const log = () => writeOut('Include', chalk.inverse(prompts[results.length]), 'hook? ' + yn);
   const startProcessing = () => {
     log();
     rl.on('line', line =>{
@@ -103,7 +119,7 @@ const initOvercommit = (dirname = __dirname) => {
     });
   }
   setTimeout(() => {
-    startProcessing();
+    processAll();
   }, 500);
 }
 

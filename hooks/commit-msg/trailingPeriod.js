@@ -1,12 +1,12 @@
 const reporter = require('../../utils/report.js');
 const fs = require('fs');
 const runTest = (commitMsg, options) => {
-  let test = commitMsg.toString().split('\n');
-  console.log(options);
-  if (test.every(line => line.length < options.length)) {
-    reporter.success(`every line is under ${options.length} characters`);
+  let test = commitMsg.toString().split('\n')[0];
+  if (!test.endsWith('.')) {
+    reporter.success('No trailing period');
   } else {
-    reporter.error(`one or more lines is above ${options.length} characters`);
+    let msg = `Commit message ends with trailing period`
+    options.error ? reporter.error(msg) : reporter.warning(msg);
   }
 }
 module.exports = (options, filePath, fileData) => {
@@ -23,9 +23,8 @@ module.exports = (options, filePath, fileData) => {
   }
 }
 module.exports.options = {
-  length: {
-    expecting: 1,
-    default: 80,
-    singular: true
+  error: {
+    expecting: 0,
+    default: false
   }
 }
