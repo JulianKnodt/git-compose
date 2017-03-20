@@ -58,12 +58,12 @@ module.exports.options = {
 	},
 	yamlPath: {
     expecting: 1,
-    default: path.resolve(__dirname, './.overcommit.yaml'),
+    default: () => path.resolve(__dirname, './.overcommit.yaml'),
     singular: true
   },
   jsonPath: {
     expecting: 1,
-    default: path.resolve(__dirname, './git-compose.json'),
+    default: () => path.resolve(__dirname, './git-compose.json'),
     singular: true
   }
 }

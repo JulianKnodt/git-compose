@@ -1,11 +1,10 @@
 const read = require('fs-readdir-recursive');
 const fs = require('fs');
-let ignored = ['.git', 'node_modules'];
 var detect = require('language-detect');
 const path = require('path');
-const HookCreator = require('./hookCreator');
 const chalk = require('chalk');
-module.exports = ({filePath=path.resolve(__dirname,'git-compose.json'), hooksPath=path.resolve(__dirname, './.git/hooks')}) => {
+const HookCreator = require('./hookCreator');
+module.exports = ({filePath, hooksPath}) => {
   fs.accessSync(hooksPath);
   fs.readFile(filePath, (err, data) => {
     if (err) {
@@ -14,7 +13,7 @@ module.exports = ({filePath=path.resolve(__dirname,'git-compose.json'), hooksPat
     let options = JSON.parse(data);
     for (let language in options.wrappers.languages) {
       let wrapperPath = options.wrappers.languages[language];
-      options.wrappers.languages[language] = path.isAbsolute(wrapperPath) ? wrapperPath : path.resolve(__dirname, wrapperPath);
+      options.wrappers.languages[language] = path.isAbsolute(wrapperPath) ? wrapperPath : path.resolve(wrapperPath);
     }
     for (let hook in options.hooks) {
       let outputFile = new HookCreator(hook);
@@ -24,7 +23,7 @@ module.exports = ({filePath=path.resolve(__dirname,'git-compose.json'), hooksPat
           const languageType = detect.filename(hook.path).toLowerCase();
           let wrapper = options.wrappers.languages[languageType];
           if (wrapper) {
-            outputFile.write(wrapper, path.isAbsolute(hook.path) ? hook.path : path.resolve(__dirname, hook.path), hook.options);
+            outputFile.write(wrapper, path.isAbsolute(hook.path) ? hook.path : path.resolve(hook.path), hook.options);
           }
         }
       });
@@ -49,12 +48,12 @@ module.exports.options = {
   },
   filePath: {
     expecting: 1,
-    default: path.resolve(__dirname, 'git-compose.json'),
+    default: () => path.resolve('git-compose.json'),
     singular: true
   },
   hooksPath: {
     expecting: 1,
-    default: path.resolve(__dirname, './.git/hooks'),
+    default: () => path.resolve('./.git/hooks'),
     singular: true
   }
 };

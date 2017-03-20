@@ -51,6 +51,7 @@ module.exports = (bashStr, optionsMap={}) => {
   for (let option in optionsMap) {
     if (optionsMap[option].default && options[optionsMap[option].alias] === undefined && options[option] === undefined) {
       let def = optionsMap[option].default;
+      typeof def === 'function' && (def = def());
       let param = optionsMap[option].alias || option;
       if (Array.isArray(def)) {
         options[param] = Object.assign(optionsMap[option], {arguments: def});

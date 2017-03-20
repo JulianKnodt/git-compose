@@ -4,18 +4,18 @@ const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const writeOut = (...str) => process.stdout.write(str.join(' '));
 
+const writeOut = (...str) => process.stdout.write(str.join(' '));
 const wrappers = {
   languages: {
-    javascript: './' + path.relative(__dirname, './wrappers/nodeWrapper.js'),
-    ruby: './' + path.relative(__dirname, './wrappers/rubyWrapper.rb')
+    javascript: path.relative('./', './wrappers/nodeWrapper.js'),
+    ruby: path.relative('./', './wrappers/rubyWrapper.rb')
   }
 };
+console.log(wrappers);
 
 const yn = '[' + chalk.green('y') + '/' + chalk.red('n') + ']';
 
-const hookDir = path.resolve(__dirname, './hooks');
 const prompts = [
 'applypatch-msg', 
 'pre-applypatch', 
@@ -33,7 +33,8 @@ const prompts = [
 'pre-auto-gc', 
 'post-rewrite',
 'pre-push'];
-const initOvercommit = (dirname = __dirname) => {
+const initOvercommit = (currentDir) => {
+  hookDir = path.resolve(__dirname, '../hooks');
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -41,17 +42,17 @@ const initOvercommit = (dirname = __dirname) => {
   let resultingOptions = {wrappers, hooks:{}};
   let results = [];
   writeOut('Creating git-compose parameters...', '\n');
-  fs.access(path.resolve(dirname, 'git-compose.json'), (err, data) => {
+  fs.access(path.resolve(currentDir, 'git-compose.json'), (err, data) => {
     writeOut('Type [exit] to quit...', '\n');
     if (err && err.errno === -2) {
-      writeOut('Writing to', __dirname + '/git-compose.json...', '\n');
+      writeOut('Writing to', currentDir + '/git-compose.json...', '\n');
     } else {
       writeOut('Will overwrite git-compose on complete.', '\n');
     }
   });
 
   //START USER INPUT
-  const processAll = () => {
+  const processAll = (currentDir) => {
     writeOut(chalk.inverse('Include all hooks?'), yn);
     rl.on('line', line => {
       if (line === 'exit') {
@@ -61,14 +62,14 @@ const initOvercommit = (dirname = __dirname) => {
           results.push(true);
         }
         writeOut('\n', chalk.inverse.bold('Cool.'), '\n\n');
-        finishProcessing();
+        finishProcessing(currentDir);
       } else {
-        startProcessing();
+        startProcessing(currentDir);
       }
     });
   }
   const log = () => writeOut('Include', chalk.inverse(prompts[results.length]), 'hook? ' + yn);
-  const startProcessing = () => {
+  const startProcessing = (dirname) => {
     log();
     rl.on('line', line =>{
       if (line === 'exit') {
@@ -82,7 +83,7 @@ const initOvercommit = (dirname = __dirname) => {
       }
       if (results.length === prompts.length) {
         writeOut('\n', chalk.inverse.bold('Cool.'), '\n\n');
-        finishProcessing();
+        finishProcessing(currentDir);
       } else {
         log();
       }
@@ -91,7 +92,7 @@ const initOvercommit = (dirname = __dirname) => {
 
   //FINISHED USER INPUT
 
-  const finishProcessing = () => {
+  const finishProcessing = (currentDir) => {
     const userChoices = prompts.map((hook, i) => ({
       hook, include: results[i]
     }));
@@ -108,7 +109,7 @@ const initOvercommit = (dirname = __dirname) => {
       }
       resultingOptions.hooks[choice.hook] = hookOptions;
     });
-    fs.writeFile(path.resolve(__dirname, 'git-compose.json'), JSON.stringify(resultingOptions, null, 2), (err, result) => {
+    fs.writeFile(path.resolve(currentDir, 'git-compose.json'), JSON.stringify(resultingOptions, null, 2), (err, result) => {
       if (err) {
         writeOut(err.toString());
         process.exitCode = 1;
@@ -119,10 +120,9 @@ const initOvercommit = (dirname = __dirname) => {
     });
   }
   setTimeout(() => {
-    processAll();
+    processAll(currentDir);
   }, 500);
 }
-
 
 
 // initOvercommit();
