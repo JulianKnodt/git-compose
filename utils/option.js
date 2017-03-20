@@ -13,11 +13,11 @@ module.exports = (bashStr, optionsMap={}) => {
     if (parts[i].startsWith('-')) {
       let stripped = stripStartingDashes(parts[i]);
       let param = optionsMap[stripped];
-      if (param.alias) {
-        stripped = param.alias;
-        param = optionsMap[param.alias];
-      }
       if (param) {
+        if (param.alias) {
+          stripped = param.alias;
+          param = optionsMap[param.alias];
+        }
         options[stripped] = param;
         if (param.expecting) {
           let args = [];

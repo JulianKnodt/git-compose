@@ -27,6 +27,7 @@ module.exports.options = {
     default: 'default will be wrapped in array'
   }, 
   error: {
-    expecting: 0
+    expecting: 0,
+    default: false
   }
 }

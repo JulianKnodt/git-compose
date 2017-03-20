@@ -3,10 +3,11 @@
 
 if (!(require.main === module)) {
   module.exports = {
-    reporter: require('./utils/report.'),
+    reporter: require('./utils/report'),
     optionParser: require('./utils/option')
   };
 } else {
+  const reporter = require('./utils/report');
   const optionParser = require('./utils/option');
   let args = process.argv.slice(2);
 
@@ -29,6 +30,7 @@ if (!(require.main === module)) {
   const command = require(path);
 
   if (args.length === 0 && path === './default') {
+    reporter.warn('no arguments passed, defaulting to help');
     args.push('-h');
   }
 

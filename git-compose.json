@@ -67,7 +67,13 @@
       "hooks": []
     },
     "post-checkout": {
-      "hooks": []
+      "hooks": [
+        {
+          "include": true,
+          "path": "./hooks/post-checkout/npmInstall.js",
+          "options": ""
+        }
+      ]
     },
     "post-merge": {
       "hooks": []

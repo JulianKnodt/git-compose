@@ -7,7 +7,7 @@ const runTest = (commitMsg, options) => {
     options.error ? reporter.error('error') : reporter.warning('warn');
   }
 }
-module.exports = (options, filePath, fileData) => {
+module.exports = (options, filePath, fileData, messageType, sha) => {
   if (fileData) {
     runTest(fileData, options);
   } else {
@@ -27,6 +27,7 @@ module.exports.options = {
     default: 'default will be wrapped in array'
   }, 
   error: {
-    expecting: 0
+    expecting: 0,
+    default: false
   }
 }
