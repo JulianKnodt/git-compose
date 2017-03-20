@@ -2,7 +2,6 @@ const reporter = require('../../utils/report.js');
 const fs = require('fs');
 const runTest = (commitMsg, options) => {
   let test = commitMsg.toString().split('\n');
-  console.log(options);
   if (test.every(line => line.length < options.length)) {
     reporter.success(`every line is under ${options.length} characters`);
   } else {
