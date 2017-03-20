@@ -25,6 +25,7 @@ module.exports = (options, filePath, fileData) => {
 module.exports.options = {
   error: {
     expecting: 0,
-    default: false
+    default: false,
+    singular: true
   }
 }

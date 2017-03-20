@@ -33,8 +33,5 @@ if (!(require.main === module)) {
   }
 
   let options = optionParser(args.join(' '), command.options);
-  for (let option in options) {
-    options[option] = options[option].arguments[0]
-  }
   command(options);
 }

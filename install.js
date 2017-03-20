@@ -4,8 +4,10 @@ let ignored = ['.git', 'node_modules'];
 var detect = require('language-detect');
 const path = require('path');
 const HookCreator = require('./hookCreator');
-module.exports = ({filePath=path.resolve(__dirname,'git-compose.json'), hookPath=path.resolve(__dirname, './.git/hooks')}) => {
-  fs.readFile(path.resolve(__dirname, 'git-compose.json'), (err, data) => {
+const chalk = require('chalk');
+module.exports = ({filePath=path.resolve(__dirname,'git-compose.json'), hooksPath=path.resolve(__dirname, './.git/hooks')}) => {
+  fs.accessSync(hooksPath);
+  fs.readFile(filePath, (err, data) => {
     if (err) {
       throw err;
     }
@@ -26,12 +28,12 @@ module.exports = ({filePath=path.resolve(__dirname,'git-compose.json'), hookPath
           }
         }
       });
-      let writePath = path.resolve(hookPath, hook);
+      let writePath = path.resolve(hooksPath, hook);
       fs.writeFile(writePath, outputFile.eval(), (err, data) => {
         if (!err) {
-          console.log(`Created ${hook} with ${hookOptions.hooks.length} hooks.`);
+          hookOptions.hooks.length && console.log(`${chalk.bold(hook)}: ${hookOptions.hooks.length} hooks`);
           fs.chmod(writePath, 0755, (err, data) => {
-            // console.log(`${hook} is now runnable.`);
+            err && console.log(chalk.red(err));
           });
         }
       });
@@ -41,21 +43,19 @@ module.exports = ({filePath=path.resolve(__dirname,'git-compose.json'), hookPath
 module.exports.options = {
   f: {
     alias: 'filePath',
-    expecting: 1,
-    default: path.resolve(__dirname, 'git-compose.json')
   },
   h: {
     alias: 'hooksPath',
-    expecting: 1,
-    default: path.resolve(__dirname, './.git/hooks')
   },
   filePath: {
     expecting: 1,
-    default: path.resolve(__dirname, 'git-compose.json')
+    default: path.resolve(__dirname, 'git-compose.json'),
+    singular: true
   },
   hooksPath: {
     expecting: 1,
-    default: path.resolve(__dirname, './.git/hooks')
+    default: path.resolve(__dirname, './.git/hooks'),
+    singular: true
   }
 };
 
